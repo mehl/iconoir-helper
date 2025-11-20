@@ -6,6 +6,7 @@
     "docker:build": "docker build -t iconoir-helper:latest .",
     "docker:save": "docker save -o images/iconoir-helper-latest.tar iconoir-helper:latest && gzip -f images/iconoir-helper-latest.tar",
     "docker:copy": "scp images/iconoir-helper-latest.tar.gz vbuds:docker/iconoir-helper",
+    "docker:all": "pnpm docker:build && pnpm docker:save && pnpm docker:copy",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",

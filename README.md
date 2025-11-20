@@ -6,7 +6,7 @@
 
 Create customized CSS from iconoir icons.
 
-I needed a customize CSS from iconoir cions with just a few icons for a small website, so I wrote this little tool one evening.
+I needed a customize CSS from iconoir with just a few icons for a small website, so I wrote this little tool one evening.
 
 Just select the icons you want to use and copy the generated CSS for use in your project.
 

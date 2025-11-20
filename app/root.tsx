@@ -8,22 +8,22 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import "./app.css";
+import "./app.scss";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-];
+// export const links: Route.LinksFunction = () => [
+//   { rel: "preconnect", href: "https://fonts.googleapis.com" },
+//   {
+//     rel: "preconnect",
+//     href: "https://fonts.gstatic.com",
+//     crossOrigin: "anonymous",
+//   },
+//   {
+//     rel: "stylesheet",
+//     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+//   },
+// ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode; }) {
   return (
     <html lang="en">
       <head>
@@ -36,6 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <script defer src="https://umami.umbrella-studios.de/script.js" data-website-id="0b4bac1a-1c9f-4b10-8acf-fb3d42da6a62"></script>
       </body>
     </html>
   );

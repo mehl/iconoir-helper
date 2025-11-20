@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "docker:build": "docker build -t iconoir-helper:latest .",
+    "docker:save": "docker save -o iconoir-helper-latest.tar iconoir-helper:latest && gzip -f iconoir-helper-latest.tar",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
@@ -11,10 +13,17 @@
   "dependencies": {
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
+    "bootstrap": "^5.3.8",
+    "csvtojson": "^2.0.14",
+    "dotenv": "^17.2.3",
     "isbot": "^5.1.31",
     "react": "^19.1.1",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
-    "react-router": "^7.9.2"
+    "react-router": "^7.9.2",
+    "scule": "^1.3.0",
+    "styled-components": "^6.1.19",
+    "valtio": "^2.2.0"
   },
   "devDependencies": {
     "@react-router/dev": "^7.9.2",
@@ -22,7 +31,7 @@
     "@types/node": "^22",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "tailwindcss": "^4.1.13",
+    "sass-embedded": "^1.93.3",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4"

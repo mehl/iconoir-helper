@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  klavier:
+    image: iconoir-helper:latest
+    container_name: iconoir-helper
+    labels:
+      caddy: "iconoir-helper.umbrella-studios.de"
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+    networks:
+      - appnetwork
+    volumes:
+      - ./DOCUMENTS:/app/DOCUMENTS
+
+networks:
+  appnetwork:
+    external:
+      name: caddy

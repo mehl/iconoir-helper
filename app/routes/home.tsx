@@ -1,13 +1,28 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { Home } from "../home/home";
+import { getCategorizedIconList, getFlatIconList, getIconMeta } from "~/services/iconServices";
+import { useLoaderData } from "react-router";
+import { useEffect } from "react";
+import iconStore from "~/state/IconStore";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "ICONOIR Helper" },
+    { name: "description", content: "Welcome to ICONOIR Helper!" },
   ];
 }
 
-export default function Home() {
-  return <Welcome />;
+export async function loader({ }: Route.LoaderArgs) {
+  const iconlist = await getFlatIconList();
+  const iconMeta = await getIconMeta();
+  const categorizedIcons = await getCategorizedIconList();
+  return { iconlist, iconMeta, categorizedIcons };
+}
+
+export default function HomeRoute() {
+  const { iconlist, iconMeta, categorizedIcons } = useLoaderData();
+  useEffect(() => {
+    iconStore.categorizedIcons = categorizedIcons;
+  }, [categorizedIcons]);
+  return <Home />;
 }

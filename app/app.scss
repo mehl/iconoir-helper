@@ -1,0 +1,45 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/*!
+ * Iconoir
+ * Copyright (c) 2025 Luca Burgio - https://iconoir.com
+ * License - https://github.com/iconoir-icons/iconoir/blob/main/LICENSE (Code: MIT License)
+ * CSS file created by Till Esser (@Wiwaltill) and automated by Pascal Jufer (@paescuj)
+ * Used and modified by Bastian Frank (@mehl) for ICONOIR helper
+ */
+
+*[class^='iconoir-']::before,
+*[class*=' iconoir-']::before {
+    content: ' ';
+    display: block;
+    background: currentColor;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    width: 1em;
+    height: 1em;
+}
+
+*[class^='iconoir-'],
+*[class*=' iconoir-'] {
+    display: inline-block;
+}
+
+.iconoir-emoji-look-left::before {
+    mask-image: url('data:image/svg+xml;charset=utf-8,<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 9C8.22386 9 8 8.77614 8 8.5C8 8.22386 8.22386 8 8.5 8C8.77614 8 9 8.22386 9 8.5C9 8.77614 8.77614 9 8.5 9Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.4578 15C2.16035 14.053 2 13.0452 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15ZM2.4578 15H7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+
+.iconoir-emoji-look-right::before {
+    mask-image: url('data:image/svg+xml;charset=utf-8,<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9C15.7761 9 16 8.77614 16 8.5C16 8.22386 15.7761 8 15.5 8C15.2239 8 15 8.22386 15 8.5C15 8.77614 15.2239 9 15.5 9Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.5422 15C21.8396 14.053 22 13.0452 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.4776 22 20.2679 19.0571 21.5422 15ZM21.5422 15H17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+
+.iconoir-circle::before {
+    mask-image: url('data:image/svg+xml;charset=utf-8,<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+
+.iconoir-emoji-quite::before {
+    mask-image: url('data:image/svg+xml;charset=utf-8,<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 15H15M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 9C8.22386 9 8 8.77614 8 8.5C8 8.22386 8.22386 8 8.5 8C8.77614 8 9 8.22386 9 8.5C9 8.77614 8.77614 9 8.5 9Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 9C15.2239 9 15 8.77614 15 8.5C15 8.22386 15.2239 8 15.5 8C15.7761 8 16 8.22386 16 8.5C16 8.77614 15.7761 9 15.5 9Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+
+.iconoir-copy::before {
+    mask-image: url('data:image/svg+xml;charset=utf-8,<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.4 20H9.6C9.26863 20 9 19.7314 9 19.4V9.6C9 9.26863 9.26863 9 9.6 9H19.4C19.7314 9 20 9.26863 20 9.6V19.4C20 19.7314 19.7314 20 19.4 20Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 9V4.6C15 4.26863 14.7314 4 14.4 4H4.6C4.26863 4 4 4.26863 4 4.6V14.4C4 14.7314 4.26863 15 4.6 15H9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}

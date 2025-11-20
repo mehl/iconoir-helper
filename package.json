@@ -1,6 +1,7 @@
 {
   "name": "iconoir-helper",
-  "private": true,
+  "version": "1.0.1",
+  "description": "Helper application for Iconoir icon set",
   "type": "module",
   "scripts": {
     "docker:build": "docker build -t iconoir-helper:latest .",

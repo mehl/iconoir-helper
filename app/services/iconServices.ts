@@ -25,6 +25,8 @@ console.log('iconoirDir:', iconoirDir);
 const iconsDir = path.join(rootDir, iconoirDir, 'icons');
 console.log('iconsDir:', iconsDir);
 const iconsCsv = path.join(rootDir, iconoirDir, 'iconoir.com/icons.csv');
+const packageJsonPath = path.join(iconoirDir, 'package.json');
+
 const iconsVariants = ['regular', 'solid'];
 
 let cachedIconList: Record<string, IconDescription> = {};
@@ -33,6 +35,11 @@ let cachedCategorizedIconList: Record<string, IconDescription[]> = {};
 export async function getIconMeta(): Promise<any[]> {
     const rows = await csv().fromFile(iconsCsv);
     return rows;
+}
+
+export async function getPackageJson(): Promise<any> {
+    const fileString = await fs.readFile(packageJsonPath, { encoding: "utf-8" });
+    return JSON.parse(fileString);
 }
 
 

@@ -13,7 +13,7 @@ export function Home({ }: {}) {
     </div>
   ));
   return (
-    <PageLayout sidebar={<SelectedList />}>
+    <PageLayout sidebar={<SelectedList />} showSearch={true}>
       {content}
     </PageLayout>
   );

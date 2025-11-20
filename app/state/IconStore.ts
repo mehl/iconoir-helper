@@ -5,6 +5,7 @@ import { debounce } from "~/util/debounce";
 
 
 const iconStore = proxy({
+    version: "",
     searchTerm: "",
     categorizedIcons: {} as Record<string, IconDescriptionFull[]>,
     filteredCategorizedIcons: {} as Record<string, IconDescriptionFull[]>,

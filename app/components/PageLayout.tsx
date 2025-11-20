@@ -1,4 +1,4 @@
-import { Button, FormControl, Nav, Navbar } from "react-bootstrap";
+import { Badge, Button, FormControl, Nav, Navbar } from "react-bootstrap";
 import { Form } from "react-router";
 import { styled } from "styled-components";
 import { useSnapshot } from "valtio";
@@ -48,28 +48,41 @@ const GridContainer = styled("div")`
     }
 `;
 
-export const PageLayout = ({ children, sidebar }: { children: React.ReactNode; sidebar?: React.ReactNode; }) => {
+export const PageLayout = ({ children, sidebar, showSearch }: { children: React.ReactNode; sidebar?: React.ReactNode; showSearch?: boolean; }) => {
     const { searchTerm } = useSnapshot(iconStore);
     const navbar = <Navbar expand="md" bg="dark" variant="dark" className="px-3">
         <Navbar.Collapse id="nav">
-            <Form className="d-flex" role="search">
-                <FormControl
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    value={searchTerm}
-                    onChange={(e) => {
-                        iconStore.setSearchTerm(e.target.value);
-                    }}
-                />
-            </Form>
+            {showSearch &&
+                <>
+                    <Form className="d-flex" role="search">
+                        <FormControl
+                            type="search"
+                            placeholder="Search"
+                            className="me-2"
+                            value={searchTerm}
+                            onChange={(e) => {
+                                iconStore.setSearchTerm(e.target.value);
+                            }}
+                        />
+                    </Form>
+                    {iconStore.version &&
+                        <Nav.Item>
+                            <Badge bg="info" text="dark" className="me-2">
+                                iconoir {iconStore.version}
+                            </Badge>
+                        </Nav.Item>
+                    }
+                </>
+            }
             <Nav className="ms-auto">
-                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/">Icons</Nav.Link>
                 <Nav.Link href="/about">About</Nav.Link>
                 <Nav.Link href="/imprint">Imprint</Nav.Link>
             </Nav>
         </Navbar.Collapse>
-        <Navbar.Brand className="ms-2">ICONOIR Helper</Navbar.Brand>
+        <Navbar.Brand className="ms-2">
+            ICONOIR Helper
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="nav" />
     </Navbar>;
     if (sidebar) {

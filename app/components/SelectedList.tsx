@@ -25,6 +25,9 @@ export const SelectedList = () => {
 
     return (
         <div>
+            <p>
+                <b>ICONOIR Helper</b> makes it easy to select icons from the fantastic <a href="https://iconoir.com/" target="_blank" rel="noopener noreferrer">iconoir</a> library and generate a customized CSS for use in your projects. Just click on the icons you want to include, and the CSS will be generated automatically below.
+            </p>
             <h4>Selected Icons</h4>
             <ul className="list-unstyled d-flex flex-row gap-4 flex-wrap py-3">
                 {selectedIcons.map((icon: string) => (

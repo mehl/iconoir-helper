@@ -21,6 +21,7 @@ const GridContainerSidebar = styled("div")`
         background-color: #f8f9fa;
         padding: 1rem;
         border-right: 1px solid #dee2e6;
+        overflow-y: auto;
     }
     .page-content {
         grid-area: content;
@@ -44,7 +45,6 @@ const GridContainer = styled("div")`
     .page-content {
         grid-area: content;
         padding: 1rem;
-        overflow-y: auto;
     }
 `;
 

@@ -4,6 +4,7 @@ import { useSnapshot } from "valtio";
 import { IconButton } from "~/components/IconButton";
 import type { IconDescription } from "~/services/iconServices";
 import iconStore from "~/state/IconStore";
+import { Icon } from "./Icon";
 
 const MAX_ICONS_DISPLAYED = 10;
 export function IconList({ iconlist }: { iconlist: Readonly<IconDescription>[]; }) {
@@ -16,9 +17,6 @@ export function IconList({ iconlist }: { iconlist: Readonly<IconDescription>[]; 
     return (
         <div className="d-flex flex-wrap gap-2 justify-content-start align-items-center my-2" style={{ maxWidth: "50vw", minWidth: "40vw" }}>
             {iconlist?.map((icon, index) => {
-                if (!showAll && index === MAX_ICONS_DISPLAYED) {
-                    return "…";
-                }
                 if (!showAll && (index > MAX_ICONS_DISPLAYED)) return null;
                 return <IconButton
                     key={icon.name}
@@ -27,15 +25,23 @@ export function IconList({ iconlist }: { iconlist: Readonly<IconDescription>[]; 
                     active={selectedIcons.includes(icon.name)}
                 />;
             })}
-            {iconlist.length > MAX_ICONS_DISPLAYED && <Button onClick={() => {
-                setShowAll(!showAll);
-            }}>
-                {showAll ?
-                    "Hide"
-                    :
-                    `Show +${iconlist.length - MAX_ICONS_DISPLAYED} more…`
-                }
-            </Button>}
+            {iconlist.length > MAX_ICONS_DISPLAYED &&
+                <div className="d-flex align-items-center gap-2">
+                    {showAll ?
+                        <Button variant="light" onClick={() => setShowAll(false)} className="p-1">
+                            <Icon name="fast-arrow-up" />
+                        </Button>
+                        :
+                        <>
+                            {`+${iconlist.length - MAX_ICONS_DISPLAYED}`}
+                            <Button variant="light" onClick={() => setShowAll(true)} className="p-1">
+                                <Icon name="fast-arrow-down" />
+                            </Button>
+                        </>
+                    }
+                </div>
+            }
         </div>
     );
 }
+

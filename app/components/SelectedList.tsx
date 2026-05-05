@@ -66,12 +66,37 @@ export const SelectedList = () => {
     );
     const [importText, setImportText] = useState("");
     const [importError, setImportError] = useState("");
+    const [copyStatus, setCopyStatus] = useState<{
+        names: "idle" | "success" | "error";
+        css: "idle" | "success" | "error";
+    }>({
+        names: "idle",
+        css: "idle",
+    });
     const textarea = useRef<HTMLTextAreaElement>(null);
+    const copyResetTimeouts = useRef<{
+        names: ReturnType<typeof setTimeout> | null;
+        css: ReturnType<typeof setTimeout> | null;
+    }>({
+        names: null,
+        css: null,
+    });
     const { selectedIcons, icons } = useSnapshot(iconStore);
 
     useEffect(() => {
         debouncedCss(setCss);
     }, [selectedIcons]);
+
+    useEffect(() => {
+        return () => {
+            if (copyResetTimeouts.current.names) {
+                clearTimeout(copyResetTimeouts.current.names);
+            }
+            if (copyResetTimeouts.current.css) {
+                clearTimeout(copyResetTimeouts.current.css);
+            }
+        };
+    }, []);
 
     const openImportModal = () => {
         setImportText("");
@@ -114,6 +139,45 @@ export const SelectedList = () => {
         setImportError("");
     };
 
+    const selectedIconNames = selectedIcons.join("\n");
+
+    const setTransientCopyStatus = (
+        target: "names" | "css",
+        status: "success" | "error",
+    ) => {
+        setCopyStatus((current) => ({ ...current, [target]: status }));
+
+        const existingTimeout = copyResetTimeouts.current[target];
+        if (existingTimeout) {
+            clearTimeout(existingTimeout);
+        }
+
+        copyResetTimeouts.current[target] = setTimeout(() => {
+            setCopyStatus((current) => ({ ...current, [target]: "idle" }));
+            copyResetTimeouts.current[target] = null;
+        }, 1500);
+    };
+
+    const handleCopy = async (target: "names" | "css", text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setTransientCopyStatus(target, "success");
+        } catch {
+            setTransientCopyStatus(target, "error");
+        }
+    };
+
+    const getCopyIconClassName = (target: "names" | "css") => {
+        switch (copyStatus[target]) {
+            case "success":
+                return "iconoir-check";
+            case "error":
+                return "iconoir-xmark";
+            default:
+                return "iconoir-copy";
+        }
+    };
+
     return (
         <div>
             <p>
@@ -154,6 +218,20 @@ export const SelectedList = () => {
             ) : (
                 <p className="text-body-secondary py-3 mb-0">No icons selected yet.</p>
             )}
+            <div className="mb-3">
+                <Button
+                    onClick={() => {
+                        void handleCopy("names", selectedIconNames);
+                    }}
+                    className="d-flex align-items-center gap-2"
+                >
+                    <i
+                        className={getCopyIconClassName("names")}
+                        style={{ fontSize: "1.6em" }}
+                    ></i>
+                    Copy Names to Clipboard
+                </Button>
+            </div>
             <h5>Generated CSS</h5>
             <textarea
                 className="form-control"
@@ -166,11 +244,14 @@ export const SelectedList = () => {
             <Button
                 onClick={() => {
                     textarea.current?.select();
-                    navigator.clipboard.writeText(css);
+                    void handleCopy("css", css);
                 }}
                 className="d-flex align-items-center gap-2"
             >
-                <i className="iconoir-copy" style={{ fontSize: "1.6em" }}></i>
+                <i
+                    className={getCopyIconClassName("css")}
+                    style={{ fontSize: "1.6em" }}
+                ></i>
                 Copy CSS to Clipboard
             </Button>
 

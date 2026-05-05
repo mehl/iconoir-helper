@@ -61,6 +61,9 @@ const debouncedCss = debounce(async (setCss: (css: string) => void) => {
 export const SelectedList = () => {
     const [css, setCss] = useState("generatedCSS");
     const [showImportModal, setShowImportModal] = useState(false);
+    const [iconPendingRemoval, setIconPendingRemoval] = useState<string | null>(
+        null,
+    );
     const [importText, setImportText] = useState("");
     const [importError, setImportError] = useState("");
     const textarea = useRef<HTMLTextAreaElement>(null);
@@ -79,6 +82,21 @@ export const SelectedList = () => {
     const closeImportModal = () => {
         setShowImportModal(false);
         setImportError("");
+    };
+
+    const requestRemoveIcon = (iconName: string) => {
+        setIconPendingRemoval(iconName);
+    };
+
+    const closeRemoveModal = () => {
+        setIconPendingRemoval(null);
+    };
+
+    const confirmRemoveIcon = () => {
+        if (iconPendingRemoval) {
+            iconStore.toggleIconSelection(iconPendingRemoval);
+        }
+        setIconPendingRemoval(null);
     };
 
     const handleImport = () => {
@@ -111,16 +129,31 @@ export const SelectedList = () => {
                 </Button>
             </div>
             <h4>Selected Icons</h4>
-            <ul className="list-unstyled d-flex flex-row gap-4 flex-wrap py-3">
-                {selectedIcons.map((icon: string) => (
-                    <li key={icon} className="d-flex align-items-center gap-1">
-                        <Button variant="light" size="sm" onClick={() => iconStore.toggleIconSelection(icon)} className="d-flex flex-column align-items-center">
-                            <Icon name={icon} />
-                            {icon}
-                        </Button>
-                    </li>
-                ))}
-            </ul>
+            {selectedIcons.length > 0 ? (
+                <ul className="selected-icons-list list-unstyled py-3 mb-0">
+                    {selectedIcons.map((icon: string) => (
+                        <li key={icon}>
+                            <button
+                                type="button"
+                                className="selected-icon-item"
+                                onClick={() => requestRemoveIcon(icon)}
+                                aria-label={`Remove ${icon} from selection`}
+                                title={`Remove ${icon}`}
+                            >
+                                <span
+                                    className="selected-icon-item__preview"
+                                    aria-hidden="true"
+                                >
+                                    <Icon name={icon} />
+                                </span>
+                                <span className="selected-icon-item__name">{icon}</span>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p className="text-body-secondary py-3 mb-0">No icons selected yet.</p>
+            )}
             <h5>Generated CSS</h5>
             <textarea
                 className="form-control"
@@ -179,6 +212,32 @@ export const SelectedList = () => {
                     </Button>
                     <Button variant="primary" onClick={handleImport}>
                         Import
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal
+                show={Boolean(iconPendingRemoval)}
+                onHide={closeRemoveModal}
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Remove Icon</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {iconPendingRemoval ? (
+                        <p className="mb-0">
+                            Remove <strong>{iconPendingRemoval}</strong> from the current
+                            selection?
+                        </p>
+                    ) : null}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closeRemoveModal}>
+                        Keep icon
+                    </Button>
+                    <Button variant="danger" onClick={confirmRemoveIcon}>
+                        Remove
                     </Button>
                 </Modal.Footer>
             </Modal>

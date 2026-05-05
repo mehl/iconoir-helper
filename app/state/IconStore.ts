@@ -1,8 +1,9 @@
 import { proxy, subscribe } from "valtio";
 import { subscribeKey } from "valtio/utils";
-import type { IconDescription, IconDescriptionFull } from "~/services/iconServices";
+import type {
+    IconDescriptionFull,
+} from "~/services/iconServices";
 import { debounce } from "~/util/debounce";
-
 
 const iconStore = proxy({
     version: "",
@@ -12,6 +13,12 @@ const iconStore = proxy({
     selectedIcons: [] as string[],
     setSearchTerm(term: string) {
         this.searchTerm = term;
+    },
+    setSelectedIcons(iconNames: string[]) {
+        const uniqueNames = Array.from(new Set(iconNames));
+        this.selectedIcons = uniqueNames.filter((iconName) =>
+            Boolean(this.icons[iconName]),
+        );
     },
     toggleIconSelection(iconName: string) {
         const index = this.selectedIcons.indexOf(iconName);
@@ -29,7 +36,7 @@ const iconStore = proxy({
             }
         }
         return gfx;
-    }
+    },
 });
 
 const debouncedFiltering = debounce(() => {
@@ -40,7 +47,9 @@ const debouncedFiltering = debounce(() => {
     }
     const filtered: Record<string, IconDescriptionFull[]> = {};
     for (const [category, icons] of Object.entries(iconStore.categorizedIcons)) {
-        const matchedIcons = icons.filter(icon => icon.name.toLowerCase().includes(term));
+        const matchedIcons = icons.filter((icon) =>
+            icon.name.toLowerCase().includes(term),
+        );
         if (matchedIcons.length > 0) {
             filtered[category] = matchedIcons;
         }
@@ -65,7 +74,7 @@ if (typeof window !== "undefined") {
         try {
             const parsed = JSON.parse(savedState);
             if (Array.isArray(parsed.selectedIcons)) {
-                iconStore.selectedIcons = parsed.selectedIcons;
+                iconStore.setSelectedIcons(parsed.selectedIcons);
             }
             if (typeof parsed.searchTerm === "string") {
                 iconStore.searchTerm = parsed.searchTerm;
